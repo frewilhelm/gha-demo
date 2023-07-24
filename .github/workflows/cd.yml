@@ -26,7 +26,9 @@ jobs:
         run: go build -o artifacts/calc
 
       - name: Create another Textfile
-        run: date > artifacts/date.txt
+        run: |
+          echo 'Hello gha-demo' > artifacts/gha-demo.txt
+          echo "This is todays $(date)" >> artifacts/gha-demo.txt
 
       - name: Create artifact
         uses: actions/upload-artifact@v3

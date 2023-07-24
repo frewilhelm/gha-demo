@@ -1,0 +1,35 @@
+---
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  CD:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check out Repository
+        uses: actions/checkout@v3
+
+      - name: Install Golang
+        uses: actions/setup-go@v4.0.0
+        with:
+          go-version-file: 'go.mod'
+
+      - name: Create directory to publish
+        run: mkdir artifacts
+
+      - name: Build Application
+        run: go build -o artifacts/calc
+
+      - name: Create another Textfile
+        run: date > artifacts/date.txt
+
+      - name: Create artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: gha-demo-artifacts
+          path: ./artifacts

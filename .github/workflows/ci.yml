@@ -4,9 +4,9 @@ name: CI
 on: 
   pull_request:
     paths:
-      - **.go
-      - go.mod
-      - go.sum
+      - "**.go"
+      - "go.mod"
+      - "go.sum"
   workflow_dispatch: {}
 
 jobs:

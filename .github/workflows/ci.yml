@@ -1,0 +1,45 @@
+---
+name: CI
+
+on:
+  push: {}
+  pull_request: {}
+  workflow_dispatch: {}
+
+jobs:
+  golangci-lint:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: List directory
+        run: ls -la
+
+      - name: Check out Repository
+        uses: actions/checkout@v3
+
+      - name: List directory
+        run: ls -la
+
+      - name: Install Golang
+        uses: actions/setup-go@v4.0.0
+        with:
+          go-version-file: 'go.mod'
+
+      - name: Run golangci-lint (Golang Linter)
+        uses: golangci/golangci-lint-action@v3.4.0
+        with:
+          version: v1.48
+
+      - name: Check for go vulnerabilities
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@latest
+          govulncheck -v -test ./...
+
+      - name: Run Tests
+        run: go test ./...
+
+      - name: Build Application
+        run: go build
+
+      - name: List directory
+        run: ls -la

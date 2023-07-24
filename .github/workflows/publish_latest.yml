@@ -1,0 +1,47 @@
+---
+name: Publish 'latest'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'lib/**'
+      - 'main.go'
+      - 'go.mod'
+      - 'go.sum'
+
+jobs:
+  # Delete release, if tag is 'latest' (Necessary to publish a new 'latest'-release)
+  delete-release-latest:
+    uses: ./.github/workflows/delete_release_latest.yml
+    secrets:
+      RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
+  # Move tag, if tag is 'latest'
+  update-latest-tag:
+    uses: ./.github/workflows/update_latest_tag.yml
+    secrets:
+      TAG_TOKEN: ${{ secrets.TAG_TOKEN }}
+
+  create-release:
+    needs: delete-release-latest
+    uses: ./.github/workflows/create_release.yml
+    with:
+      tag: 'latest'
+    secrets:
+      RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
+  publish-assets:
+    needs: create-release
+    uses: ./.github/workflows/publish_assets.yml
+    with:
+      tag: 'latest'
+    secrets:
+      RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
+  update-changelog:
+    needs: create-release
+    uses: ./.github/workflows/update_changelog.yml
+    secrets:
+      TAG_TOKEN: ${{ secrets.TAG_TOKEN }}

@@ -1,0 +1,51 @@
+---
+name: _Create Release
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+    secrets:
+      RELEASE_TOKEN:
+        required: true
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        run: |
+          draft=false
+          prerelease=false
+          gen_notes=true
+          body=''
+
+          if [[ '${{ inputs.tag }}' == 'latest' ]]; then
+            draft=true
+            prerelease=true
+            gen_notes=false
+            body="Check the [CHANGELOG](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)"
+          fi
+
+          resp="$(curl -q -i -X POST "https://api.github.com/repos/${{ github.repository }}/releases" \
+            -H "Authorization: token ${{ secrets.RELEASE_TOKEN }} " \
+            -H "Content-Type: application/json" \
+            -d '{
+              "tag_name": "'"${{ inputs.tag }}"'",
+              "target_commitish": "main",
+              "name": "'"${{ inputs.tag }}"'",
+              "body": "'"${body}"'",
+              "draft": '${draft}',
+              "prerelease": '${prerelease}',
+              "generate_release_notes": '${gen_notes}'
+            }')"
+
+          header=$(echo "${resp}" | sed '/^\r$/q' | tr -d '\r\n')
+          body=$(echo "${resp}" | sed -n '/^\r$/,${p}' | sed '1d' | tr -d '\r\n')
+
+          if ! grep -q "HTTP/2 201" <<< "${header}"; then
+            echo "received non HTTP status code 201: ${body}"
+            exit 1
+          fi

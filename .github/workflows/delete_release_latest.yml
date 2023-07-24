@@ -1,0 +1,40 @@
+---
+name: _Delete Release
+
+on:
+  workflow_call:
+    secrets:
+      RELEASE_TOKEN:
+        required: true
+
+jobs:
+  get-tag-id:
+    uses: ./.github/workflows/get_tag_id.yml
+    with:
+      tag: 'latest'
+    secrets:
+      RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
+  delete-release:
+    needs: get-tag-id
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete Release
+        run: |
+          tag_id="${{ needs.get-tag-id.outputs.tag_id }}"
+
+          if [[ -z "${tag_id}" ]]; then
+            echo "Tag 'latest' not present"
+            exit 0
+          fi
+
+          resp="$(curl -q -i -X DELETE "https://api.github.com/repos/${{ github.repository }}/releases/$tag_id" \
+            -H "Authorization: token ${{ secrets.RELEASE_TOKEN }}")"
+
+          header=$(echo "${resp}" | sed '/^\r$/q' | tr -d '\r\n')
+          body=$(echo "${resp}" | sed -n '/^\r$/,${p}' | sed '1d' | tr -d '\r\n')
+
+          if ! grep -q "HTTP/2 204" <<< "${header}"; then
+            echo "received non HTTP status code 204: ${body}"
+            exit 1
+          fi

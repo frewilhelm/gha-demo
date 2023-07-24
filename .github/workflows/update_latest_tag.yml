@@ -1,0 +1,29 @@
+---
+name: _Update latest tag
+
+on:
+  workflow_call:
+    secrets:
+      TAG_TOKEN:
+        required: true
+
+jobs:
+  update-latest-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-tags: true
+          fetch-depth: 0
+          token: ${{ secrets.TAG_TOKEN }}
+
+      - name: Update latest tag
+        run: |
+          if grep -q 'latest' <<< "$(git tag -l)"; then
+            git tag -d latest
+          fi
+
+          git tag -f latest "$(git rev-parse HEAD)"
+          git push origin :refs/tags/latest
+          git push origin latest

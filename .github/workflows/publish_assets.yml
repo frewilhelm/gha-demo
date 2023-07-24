@@ -1,0 +1,66 @@
+---
+name: _Publish Assets
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+    secrets:
+      RELEASE_TOKEN:
+        required: true
+
+jobs:
+  get-tag-id:
+    uses: ./.github/workflows/get_tag_id.yml
+    with:
+      tag: ${{ inputs.tag }}
+    secrets:
+      RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
+  publish-assets:
+    needs: get-tag-id
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Repository
+        uses: actions/checkout@v3
+
+      - name: Install Golang
+        uses: actions/setup-go@v4.0.0
+        with:
+          go-version-file: 'go.mod'
+
+      - name: Build application
+        run: |
+          go build -o calculator
+          GOOS=windows GOARCH=amd64 go build -o calculator.exe
+
+      - name: Publish Assets
+        run: |
+          tag_id="${{ needs.get-tag-id.outputs.tag_id }}"
+
+          if [[ -z "${tag_id}" ]]; then
+            echo "Release ${{ inputs.tag }} does not exist"
+            exit 1
+          fi
+
+          resp="$(curl -i -X POST "https://uploads.github.com/repos/${{ github.repository }}/releases/${tag_id}/assets?name=calculator" \
+            -H "Authorization: token ${{ secrets.RELEASE_TOKEN }}" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary @'calculator')"
+
+          if ! grep -q "HTTP/2 201" <<< "${resp}"; then
+            echo "received no HTTP status code 201t: ${resp}"
+            exit 1
+          fi
+
+          resp="$(curl -i -X POST "https://uploads.github.com/repos/${{ github.repository }}/releases/${tag_id}/assets?name=calculator.exe" \
+            -H "Authorization: token ${{ secrets.RELEASE_TOKEN }}" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary @'calculator.exe')"
+
+          if ! grep -q "HTTP/2 201" <<< "${resp}"; then
+            echo "received no HTTP status code 201: ${resp}"
+            exit 1
+          fi

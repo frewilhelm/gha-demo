@@ -1,0 +1,50 @@
+---
+name: _Validate Tag
+
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: false
+        type: string
+    outputs:
+      tag:
+        description: 'A valid tag'
+        value: ${{ jobs.validate-tag.outputs.valid-tag }}
+
+jobs:
+  validate-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      valid-tag: ${{ steps.validate-tag.outputs.valid_tag }}
+    steps:
+      - name: Check out Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-tags: true
+          fetch-depth: 0
+
+      - name: Validate Tag
+        id: validate-tag
+        run: |
+          tag=${{ inputs.tag }}
+
+          # If tag is empty, the release is 'latest'
+          if [[ -z ${tag} ]]; then
+            echo "valid_tag=latest" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          # check tag format
+          if ! [[ ${tag} =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "wrong format: ${tag} (should match: ^v[0-9]+\.[0-9]+\.[0-9]+$)"
+            exit 1
+          fi
+
+          # check previous tags
+          if grep ^${tag}$ <<< "$(git tag -l)"; then
+            echo "tag already used: ${tag}"
+            exit 1
+          fi
+
+          echo "valid_tag=${tag}" >> $GITHUB_OUTPUT

@@ -1,0 +1,32 @@
+---
+name: Publish release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Publish a release with this tag'
+        required: true
+        type: string
+
+jobs:
+  validate-tag:
+    uses: ./.github/workflows/validate_tag.yml
+    with:
+      tag: ${{ inputs.tag }}
+
+  create-release:
+    needs: validate-tag
+    uses: ./.github/workflows/create_release.yml
+    with:
+      tag: ${{ needs.validate-tag.outputs.tag }}
+    secrets:
+      RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
+  publish-assets:
+    needs: [validate-tag, create-release]
+    uses: ./.github/workflows/publish_assets.yml
+    with:
+      tag: ${{ needs.validate-tag.outputs.tag }}
+    secrets:
+      RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}

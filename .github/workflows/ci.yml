@@ -1,13 +1,7 @@
 ---
 name: CI
 
-on: 
-  pull_request:
-    paths:
-      - "**.go"
-      - "go.mod"
-      - "go.sum"
-  workflow_dispatch: {}
+on: [pull_request, workflow_dispatch]
 
 jobs:
   CI:

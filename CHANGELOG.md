@@ -1,5 +1,11 @@
-# Changelog (auto-generated: Sun Sep 17 19:01:23 UTC 2023)
+# Changelog (auto-generated: Mon Sep 18 14:20:32 UTC 2023)
 -------------------------------------
+* Merge pull request #8 from fwilhelm92/fwilhelm92-patch-2 ([bb29431](https://github.com/fwilhelm92/gha-demo/commit/bb29431))
+* test/end2end/windows.ps1: Fix output for failures ([043e84c](https://github.com/fwilhelm92/gha-demo/commit/043e84c))
+* test/end2end/linux.bash: Adjust tests to new output ([4f6d42a](https://github.com/fwilhelm92/gha-demo/commit/4f6d42a))
+* test/end2end/windows.ps1: Fix test checking ([be959b5](https://github.com/fwilhelm92/gha-demo/commit/be959b5))
+* main.go: Remove variable initialization ([a090abc](https://github.com/fwilhelm92/gha-demo/commit/a090abc))
+* main.go: Change output format ([05a70c9](https://github.com/fwilhelm92/gha-demo/commit/05a70c9))
 * Merge pull request #7 from fwilhelm92/add_app ([6fa1bad](https://github.com/fwilhelm92/gha-demo/commit/6fa1bad))
 * Add application ([a903e33](https://github.com/fwilhelm92/gha-demo/commit/a903e33))
 * Init setup ([ae8beba](https://github.com/fwilhelm92/gha-demo/commit/ae8beba))

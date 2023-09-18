@@ -21,8 +21,8 @@ prefixPattern='[0-9]{4}/[0-9]{2}/[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}'
 # Sum
 operator='+'
 
-testCmd 2 4 '2 + 4 = 6' || ((rc+=1))
-testCmd 99 4 '99 + 4 = 103' || ((rc+=1))
+testCmd 2 4 6 || ((rc+=1))
+testCmd 99 4 103 || ((rc+=1))
 
 # Error with string in input
 testCmd 'a' 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"a\": invalid syntax$" || ((rc+=1))

@@ -61,12 +61,10 @@ func doMain() error {
 	var result int
 	switch *operator {
 	case "+":
-		result = lib.Sum(zahl1, zahl2)
+		fmt.Println(lib.Sum(zahl1, zahl2))
 	default:
 		return fmt.Errorf("operator ist nicht implementiert: %v", *operator)
 	}
-
-	fmt.Printf("%v %v %v = %v\n", zahl1, *operator, zahl2, result)
 
 	return nil
 }

@@ -58,7 +58,6 @@ func doMain() error {
 		return fmt.Errorf("operator ist nicht erlaubt: %v", *operator)
 	}
 
-	var result int
 	switch *operator {
 	case "+":
 		fmt.Println(lib.Sum(zahl1, zahl2))

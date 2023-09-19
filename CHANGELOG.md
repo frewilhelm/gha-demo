@@ -1,5 +1,9 @@
-# Changelog (auto-generated: Mon Sep 18 14:20:32 UTC 2023)
+# Changelog (auto-generated: Tue Sep 19 12:22:31 UTC 2023)
 -------------------------------------
+* Merge pull request #10 from fwilhelm92/addMinus ([7af86bc](https://github.com/fwilhelm92/gha-demo/commit/7af86bc))
+* Update linux.bash ([5451878](https://github.com/fwilhelm92/gha-demo/commit/5451878))
+* Add functionality: Subtraction ([d000227](https://github.com/fwilhelm92/gha-demo/commit/d000227))
+* lib/sum.go: Remove comment ([40656ee](https://github.com/fwilhelm92/gha-demo/commit/40656ee))
 * Merge pull request #8 from fwilhelm92/fwilhelm92-patch-2 ([bb29431](https://github.com/fwilhelm92/gha-demo/commit/bb29431))
 * test/end2end/windows.ps1: Fix output for failures ([043e84c](https://github.com/fwilhelm92/gha-demo/commit/043e84c))
 * test/end2end/linux.bash: Adjust tests to new output ([4f6d42a](https://github.com/fwilhelm92/gha-demo/commit/4f6d42a))

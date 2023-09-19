@@ -27,7 +27,7 @@ func doMain() error {
 
 	input1 := flag.String("zahl1", "", "1. Zahl")
 	input2 := flag.String("zahl2", "", "2. Zahl")
-	operator := flag.String("operator", "", "Operator (+)")
+	operator := flag.String("operator", "", "Operator (+, -)")
 
 	flag.Parse()
 
@@ -48,19 +48,11 @@ func doMain() error {
 		return err
 	}
 
-	allowedOperator := false
-	for _, o := range [3]string{"+"} {
-		if o == *operator {
-			allowedOperator = true
-		}
-	}
-	if !allowedOperator {
-		return fmt.Errorf("operator ist nicht erlaubt: %v", *operator)
-	}
-
 	switch *operator {
 	case "+":
 		fmt.Println(lib.Sum(zahl1, zahl2))
+	case "-":
+		fmt.Println(lib.Sub(zahl1, zahl2))
 	default:
 		return fmt.Errorf("operator ist nicht implementiert: %v", *operator)
 	}

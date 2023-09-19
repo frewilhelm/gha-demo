@@ -28,6 +28,17 @@ $operator = '+'
 # Error with float in input
 (RunTest 2.3 4 'gha-demo failed: strconv.Atoi: parsing "2.3": invalid syntax') -or $false ? "" : $rc++
 
+# Sub
+$operator = '-'
+
+(RunTest 2 4 -2) -or $false ? "" : $rc++
+(RunTest 99 4 95) -or $false ? "" : $rc++
+
+# Error with string in input
+(RunTest 'a' 4 'gha-demo failed: strconv.Atoi: parsing "a": invalid syntax') -or $false ? "" : $rc++
+# Error with float in input
+(RunTest 2.3 4 'gha-demo failed: strconv.Atoi: parsing "2.3": invalid syntax') -or $false ? "" : $rc++
+
 if ($rc -eq 0) {
 	Write-Host "All tests passed"
  	exit(0)

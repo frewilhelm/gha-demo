@@ -45,5 +45,22 @@ if [[ $rc -eq 0 ]]; then
 	exit 0
 else
 	echo 'Test(s) failed'
+
+ # Sub
+operator='x'
+
+testCmd 2 4 8 || ((rc+=1))
+testCmd 99 4 396 || ((rc+=1))
+
+# Error with string in input
+testCmd 'a' 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"a\": invalid syntax$" || ((rc+=1))
+# Error with float in input
+testCmd 2.3 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"2.3\": invalid syntax$" || ((rc+=1))
+
+if [[ $rc -eq 0 ]]; then
+	echo 'All tests passed'
+	exit 0
+else
+	echo 'Test(s) failed'
 	exit 1
 fi

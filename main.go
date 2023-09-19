@@ -27,7 +27,7 @@ func doMain() error {
 
 	input1 := flag.String("zahl1", "", "1. Zahl")
 	input2 := flag.String("zahl2", "", "2. Zahl")
-	operator := flag.String("operator", "", "Operator (+, -)")
+	operator := flag.String("operator", "", "Operator (+, -, x)")
 
 	flag.Parse()
 
@@ -53,6 +53,8 @@ func doMain() error {
 		fmt.Println(lib.Sum(zahl1, zahl2))
 	case "-":
 		fmt.Println(lib.Sub(zahl1, zahl2))
+	case "x":
+		fmt.Println(lib.Mult(zahl1, zahl2))		
 	default:
 		return fmt.Errorf("operator ist nicht implementiert: %v", *operator)
 	}

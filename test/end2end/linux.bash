@@ -30,7 +30,7 @@ testCmd 'a' 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"a\": i
 testCmd 2.3 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"2.3\": invalid syntax$" || ((rc+=1))
 
 # Sub
-operator='+'
+operator='-'
 
 testCmd 2 4 -2 || ((rc+=1))
 testCmd 99 4 95 || ((rc+=1))

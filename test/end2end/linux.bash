@@ -46,7 +46,7 @@ if [[ $rc -eq 0 ]]; then
 else
 	echo 'Test(s) failed'
 
- # Sub
+ # Mult
 operator='x'
 
 testCmd 2 4 8 || ((rc+=1))

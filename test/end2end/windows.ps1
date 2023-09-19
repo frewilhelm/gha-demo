@@ -39,14 +39,6 @@ $operator = '-'
 # Error with float in input
 (RunTest 2.3 4 'gha-demo failed: strconv.Atoi: parsing "2.3": invalid syntax') -or $false ? "" : $rc++
 
-if ($rc -eq 0) {
-	Write-Host "All tests passed"
- 	exit(0)
-} else {
-	Write-Host "Test(s) failed"
- 	exit(1)
-}
-
 # Mult
 $operator = 'x'
 

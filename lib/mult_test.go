@@ -2,7 +2,7 @@ package lib
 
 import "testing"
 
-func TestSub(t *testing.T) {
+func TestMult(t *testing.T) {
 	testCases := []struct {
 		a, b, expected int
 	}{

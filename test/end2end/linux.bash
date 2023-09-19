@@ -40,8 +40,8 @@ testCmd 'a' 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"a\": i
 # Error with float in input
 testCmd 2.3 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"2.3\": invalid syntax$" || ((rc+=1))
 
- # Sub
-operator='-'
+ # Mult
+operator='x'
 
 testCmd 2 4 8 || ((rc+=1))
 testCmd 99 4 396 || ((rc+=1))

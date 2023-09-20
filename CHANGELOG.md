@@ -1,5 +1,8 @@
-# Changelog (auto-generated: Tue Sep 19 16:48:58 UTC 2023)
+# Changelog (auto-generated: Wed Sep 20 08:20:55 UTC 2023)
 -------------------------------------
+* Merge pull request #14 from fwilhelm92/addDiv ([876c77d](https://github.com/fwilhelm92/gha-demo/commit/876c77d))
+* test/end2end/linux.bash: Fix test ([2590f8a](https://github.com/fwilhelm92/gha-demo/commit/2590f8a))
+* lib/div.go: Add Division ([92cbf4f](https://github.com/fwilhelm92/gha-demo/commit/92cbf4f))
 * Merge pull request #12 from fwilhelm92/addMult ([14c229d](https://github.com/fwilhelm92/gha-demo/commit/14c229d))
 * linux.bash: Fix test ([eaa3ac5](https://github.com/fwilhelm92/gha-demo/commit/eaa3ac5))
 * linux.bash: Add error for demo ([5f8b9e4](https://github.com/fwilhelm92/gha-demo/commit/5f8b9e4))

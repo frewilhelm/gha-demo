@@ -31,7 +31,7 @@ func doMain() error {
 
 	flag.Parse()
 
-	// Validation
+	// Input Validation
 	if *input1 == "" {
 		return &MissingInput{"zahl1"}
 	}

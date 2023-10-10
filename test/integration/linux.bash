@@ -71,7 +71,7 @@ else
 fi
 
  # Power
-operator='/'
+operator='^'
 
 testCmd 4 2 16 || ((rc+=1))
 testCmd 92 4 71639296 || ((rc+=1))

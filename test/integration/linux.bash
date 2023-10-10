@@ -69,3 +69,22 @@ else
 	echo 'Test(s) failed'
 	exit 1
 fi
+
+ # Power
+operator='/'
+
+testCmd 4 2 16 || ((rc+=1))
+testCmd 92 4 71639296 || ((rc+=1))
+
+# Error with string in input
+testCmd 'a' 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"a\": invalid syntax$" || ((rc+=1))
+# Error with float in input
+testCmd 2.3 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"2.3\": invalid syntax$" || ((rc+=1))
+
+if [[ $rc -eq 0 ]]; then
+	echo 'All tests passed'
+	exit 0
+else
+	echo 'Test(s) failed'
+	exit 1
+fi

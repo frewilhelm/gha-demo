@@ -68,3 +68,22 @@ if ($rc -eq 0) {
 	Write-Host "Test(s) failed"
  	exit(1)
 }
+
+# Power
+$operator = '^'
+
+(RunTest 8 2 16) -or $false ? "" : $rc++
+(RunTest 92 4 71639296) -or $false ? "" : $rc++
+
+# Error with string in input
+(RunTest 'a' 4 'gha-demo failed: strconv.Atoi: parsing "a": invalid syntax') -or $false ? "" : $rc++
+# Error with float in input
+(RunTest 2.3 4 'gha-demo failed: strconv.Atoi: parsing "2.3": invalid syntax') -or $false ? "" : $rc++
+
+if ($rc -eq 0) {
+	Write-Host "All tests passed"
+ 	exit(0)
+} else {
+	Write-Host "Test(s) failed"
+ 	exit(1)
+}

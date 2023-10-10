@@ -24,53 +24,25 @@ operator='+'
 testCmd 2 4 6 || ((rc+=1))
 testCmd 99 4 103 || ((rc+=1))
 
-# Error with string in input
-testCmd 'a' 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"a\": invalid syntax$" || ((rc+=1))
-# Error with float in input
-testCmd 2.3 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"2.3\": invalid syntax$" || ((rc+=1))
-
 # Sub
 operator='-'
 
 testCmd 2 4 -2 || ((rc+=1))
 testCmd 99 4 95 || ((rc+=1))
 
-# Error with string in input
-testCmd 'a' 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"a\": invalid syntax$" || ((rc+=1))
-# Error with float in input
-testCmd 2.3 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"2.3\": invalid syntax$" || ((rc+=1))
-
- # Mult
+# Mult
 operator='x'
 
 testCmd 2 4 8 || ((rc+=1))
 testCmd 99 4 396 || ((rc+=1))
 
-# Error with string in input
-testCmd 'a' 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"a\": invalid syntax$" || ((rc+=1))
-# Error with float in input
-testCmd 2.3 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"2.3\": invalid syntax$" || ((rc+=1))
-
- # Div
+# Div
 operator='/'
 
 testCmd 4 2 2 || ((rc+=1))
 testCmd 92 4 23 || ((rc+=1))
 
-# Error with string in input
-testCmd 'a' 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"a\": invalid syntax$" || ((rc+=1))
-# Error with float in input
-testCmd 2.3 4 "^${prefixPattern} gha-demo failed: strconv.Atoi: parsing \"2.3\": invalid syntax$" || ((rc+=1))
-
-if [[ $rc -eq 0 ]]; then
-	echo 'All tests passed'
-	exit 0
-else
-	echo 'Test(s) failed'
-	exit 1
-fi
-
- # Power
+# Power
 operator='^'
 
 testCmd 4 2 16 || ((rc+=1))

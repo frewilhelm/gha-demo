@@ -23,21 +23,11 @@ $operator = '+'
 (RunTest 2 4 6) -or $false ? "" : $rc++
 (RunTest 99 4 103) -or $false ? "" : $rc++
 
-# Error with string in input
-(RunTest 'a' 4 'gha-demo failed: strconv.Atoi: parsing "a": invalid syntax') -or $false ? "" : $rc++
-# Error with float in input
-(RunTest 2.3 4 'gha-demo failed: strconv.Atoi: parsing "2.3": invalid syntax') -or $false ? "" : $rc++
-
 # Sub
 $operator = '-'
 
 (RunTest 2 4 -2) -or $false ? "" : $rc++
 (RunTest 99 4 95) -or $false ? "" : $rc++
-
-# Error with string in input
-(RunTest 'a' 4 'gha-demo failed: strconv.Atoi: parsing "a": invalid syntax') -or $false ? "" : $rc++
-# Error with float in input
-(RunTest 2.3 4 'gha-demo failed: strconv.Atoi: parsing "2.3": invalid syntax') -or $false ? "" : $rc++
 
 # Mult
 $operator = 'x'
@@ -45,16 +35,17 @@ $operator = 'x'
 (RunTest 2 4 8) -or $false ? "" : $rc++
 (RunTest 99 4 396) -or $false ? "" : $rc++
 
-# Error with string in input
-(RunTest 'a' 4 'gha-demo failed: strconv.Atoi: parsing "a": invalid syntax') -or $false ? "" : $rc++
-# Error with float in input
-(RunTest 2.3 4 'gha-demo failed: strconv.Atoi: parsing "2.3": invalid syntax') -or $false ? "" : $rc++
-
 # Div
 $operator = '/'
 
 (RunTest 8 2 4) -or $false ? "" : $rc++
 (RunTest 92 4 23) -or $false ? "" : $rc++
+
+# Power
+$operator = '^'
+
+(RunTest 8 2 64) -or $false ? "" : $rc++
+(RunTest 92 4 71639296) -or $false ? "" : $rc++
 
 # Error with string in input
 (RunTest 'a' 4 'gha-demo failed: strconv.Atoi: parsing "a": invalid syntax') -or $false ? "" : $rc++

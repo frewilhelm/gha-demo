@@ -57,6 +57,8 @@ func doMain() error {
 		fmt.Println(lib.Mult(zahl1, zahl2))
 	case "/":
 		fmt.Println(lib.Div(zahl1, zahl2))
+	case "^":
+		fmt.Println(lib.Power(zahl1, zahl2))
 	default:
 		return fmt.Errorf("operator ist nicht implementiert: %v", *operator)
 	}
